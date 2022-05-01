@@ -11,7 +11,7 @@ class Sort:
         self.lineColor = (18, 124, 128)
         self.running = False
         self.backgroundColor = (63, 64, 51)
-        self.arr = [1] * 400  # Max number of items in array can be width/2
+        self.arr = [1] * 130 # Max number of items in array can be width/2
         self.width, self.height = 800, 500
         self.timer_interval = False
         self.time = 0.5
@@ -25,6 +25,7 @@ class Sort:
     def generateRandomArr(self):
         for i in range(len(self.arr)):
             self.arr[i] = random.randint(10, self.height)
+        print(self.arr)
 
     #  Keeps the game running and handles input
     def game(self):
@@ -57,40 +58,43 @@ class Sort:
     #  Draws the initial array
     def drawArr(self):
         self.screen.fill(self.backgroundColor)
-        width_of_lines = int(self.width / len(self.arr))
+        width_of_lines = float(self.width / len(self.arr))
         for index, value in enumerate(self.arr):
-            pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+            if index == 0:
+                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
+            else:
+                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
 
     #  Highlights the lines which need to be swapped before they are swapped
     def highlightLinesBefore(self, x, y):
         self.screen.fill(self.backgroundColor)
-        width_of_lines = int(self.width / len(self.arr))
+        width_of_lines = float(self.width / len(self.arr))
         for index, value in enumerate(self.arr):
+
             if x == index or y == index:
-                pygame.draw.line(self.screen, (255, 0, 0), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, (255, 0, 0), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
             else:
-                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
 
     #  Highlights the lines which need to be swapped after they are swapped
     def highlightLinesAfter(self, x, y):
         self.screen.fill(self.backgroundColor)
-        width_of_lines = int(self.width / len(self.arr))
+        width_of_lines = float(self.width / len(self.arr))
         for index, value in enumerate(self.arr):
             if x == index or y == index:
-                pygame.draw.line(self.screen, (50, 168, 82), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, (50, 168, 82), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
             else:
-                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
 
     #  Highlights the lines which won't be swapped/are currently being checked
     def highlightLinesLowerThan(self, x, y):
-        y_value_found = False
         self.screen.fill(self.backgroundColor)
-        width_of_lines = int(self.width / len(self.arr))
+        width_of_lines = float(self.width / len(self.arr))
         for index, value in enumerate(self.arr):
             if x == index or y == index:
-                pygame.draw.line(self.screen, (229, 240, 22), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, (229, 240, 22), (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
             else:
-                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=width_of_lines - 1)
+                pygame.draw.line(self.screen, self.lineColor, (((index+0.5) * width_of_lines), 0), (((index+0.5) * width_of_lines), value), width=round((self.width / len(self.arr))/2))
 
     #  Sorts the lines and play a ding sound effect when sorting is finished
     def sortAndShow(self, sort_method):
